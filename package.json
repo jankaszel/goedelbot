@@ -1,0 +1,20 @@
+{
+  "name": "goedelbot",
+  "version": "0.0.1",
+  "description": "A Telegram bot which will keep you up with daily digests from the subject of logic.",
+  "author": "Jan Kassel <jan.kassel@rwth-aachen.de>",
+  "main": "bot.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jankassel/goedelbot"
+  },
+  "bugs": {
+    "url": "https://github.com/jankassel/goedelbot/issues"
+  },
+  "dependencies": {
+    "cron": "^1.0.9",
+    "node-telegram-bot-api": "^0.11.1"
+  },
+  "private": true,
+  "license": "MIT"
+}
