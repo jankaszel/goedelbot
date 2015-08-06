@@ -4,7 +4,7 @@ var TelegramBot = require('node-telegram-bot-api'),
 
 var token = process.env.TOKEN,
   bot = new TelegramBot(token, { polling: true }),
-  client = redis.createClient(6379, 'chipmonkey'),
+  client = redis.createClient(6379, process.env.REDIS_HOST),
   job = null,
   chats = [];
 
@@ -15,8 +15,8 @@ client.get('chats', function (err, reply) {
   if (reply !== null) {
     try {
       data = JSON.parse(reply.toString());
-      
-      if (Arrays.isArray(data)) {
+
+      if (Array.isArray(data)) {
         chats = data;
         console.log('Restored state from redis (%s)',
           JSON.stringify(chats));
@@ -38,8 +38,8 @@ function sync () {
 }
 
 bot.getMe().then(function (me) {
-  console.log('Hi, my name is %s %s. I\'m a bot!',
-    me.first_name, me.last_name);
+  console.log('Hi, my name is %s. I\'m a bot!',
+    me.first_name);
 });
 
 bot.on('message', function (msg) {
@@ -83,7 +83,7 @@ bot.on('message', function (msg) {
   }
 });
 
-job = new CronJob('00 00 10 * * *', function () {
+job = new CronJob('00 30 10 * * *', function () {
   console.log('Digest job called');
 
   chats.forEach(function (chatId) {
