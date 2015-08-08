@@ -25,7 +25,6 @@ bot.getMe().then(function (me) {
 });
 
 bot.on('message', function (msg) {
-  console.log(JSON.stringify(msg));
   var chatId = msg.chat.id;
 
   if (msg.text === '/start') {
@@ -36,7 +35,9 @@ bot.on('message', function (msg) {
     else {
       bot.sendMessage(chatId, 'Guten Tag, edle Logiker! Ich bin Kurt Gödel, ' +
         'und werde Ihren Lerntag um logische Fakten bereichern.');
+
       chats.push(chatId);
+      console.log('Joined chat %d!', chatId);
     }
   }
 
@@ -48,7 +49,7 @@ bot.on('message', function (msg) {
   else if (msg.text === '/schleichen') {
     if (!chats.contains(chatId)) {
       chats.push(chatId);
-      console.log('Silent start');
+      console.log('Joined chat %d silently!', chatId);
     }
 
     bot.sendMessage(chatId, 'Pssscht!');
