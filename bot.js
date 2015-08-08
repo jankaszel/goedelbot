@@ -3,7 +3,9 @@
 var TelegramBot = require('node-telegram-bot-api'),
   CronJob = require('cron').CronJob,
   redis = require('redis'),
-  ChatStore = require('./chat-store'),
+  util = require('util');
+  
+var ChatStore = require('./chat-store'),
   MessageStore = require('./message-store');
 
 var seq = require('./seq.json');
@@ -36,6 +38,11 @@ bot.on('message', function (msg) {
         'und werde Ihren Lerntag um logische Fakten bereichern.');
       chats.push(chatId);
     }
+  }
+
+  else if (msg.text === '/findegut') {
+    bot.sendMessage(chatId, util.format('%s findet das gut! Gödel-approved!',
+      msg.from.first_name));
   }
 
   else if (msg.text === '/schleichen') {
