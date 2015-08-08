@@ -4,6 +4,8 @@ function ChatStore (client) {
   this.ids = [];
   this.client = client;
 
+  var self = this;
+
   this.client.get('ids', function (err, reply) {
     if (err)
       throw err;
@@ -12,9 +14,9 @@ function ChatStore (client) {
       try {
         var data = JSON.parse(reply.toString());
         if (Array.isArray(data)) {
-          this.ids = data;
+          self.ids = data;
           console.log('Restored state from redis (%s)',
-            JSON.stringify(this.ids));
+            JSON.stringify(self.ids));
         }
       }
 
