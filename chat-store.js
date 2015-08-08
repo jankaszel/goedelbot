@@ -10,8 +10,8 @@ function ChatStore (client) {
 
     if (reply !== null) {
       try {
-        data = JSON.parse(reply.toString());
-          if (Array.isArray(data)) {
+        var data = JSON.parse(reply.toString());
+        if (Array.isArray(data)) {
           this.ids = data;
           console.log('Restored state from redis (%s)',
             JSON.stringify(this.ids));
