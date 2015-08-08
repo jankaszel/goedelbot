@@ -14,7 +14,7 @@ var token = process.env.TOKEN,
   jobs = [];
 
 var chats = new ChatStore(client),
-  motivations = new MessageStore({ client: client, key: 'motivational' }),
+  motivations = new MessageStore({ client: client, key: 'motivation' }),
   tips = new MessageStore({ client: client, key: 'tip' });
 
 bot.getMe().then(function (me) {
@@ -23,6 +23,7 @@ bot.getMe().then(function (me) {
 });
 
 bot.on('message', function (msg) {
+  console.log(JSON.stringify(msg));
   var chatId = msg.chat.id;
 
   if (msg.text === '/start') {
@@ -47,11 +48,15 @@ bot.on('message', function (msg) {
   }
 
   else if (msg.text === '/motivation') {
-    bot.sendMessage(chatId, motivations.pop());
+    motivations.pop(function (message) {
+      bot.sendMessage(chatId, message);
+    });
   }
 
   else if (msg.text === '/tip') {
-    bot.sendMessage(chatId, tips.pop());
+    tips.pop(function (message) {
+      bot.sendMessage(chatId, message);
+    });
   }
 });
 

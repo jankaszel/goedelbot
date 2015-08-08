@@ -10,9 +10,12 @@ function MessageStore (options) {
 
 MessageStore.prototype = {
   pop: function (callback) {
+    var self = this;
+
     if (typeof callback !== 'function')
       throw 'MessageStore.pop: callback is not type of function';
 
+    console.log(this.key);
     if (this.messages.length === 0) {
       this.client.get(this.key, function (err, val) {
         if (err)
@@ -20,11 +23,12 @@ MessageStore.prototype = {
 
         var data = JSON.parse(val);
         if (Array.isArray(data)) {
-          this.messages = permute(data);
+          self.messages = permute(data);
+          callback(self.messages.pop());
         }
 
         else
-          throw 'MessageStore.pop: corrupted redis data for key ' + this.key;
+          console.error('MessageStore.pop: corrupted redis data for key \'%s\'', self.key);
       })
     }
 
