@@ -1,0 +1,25 @@
+[{
+  "type": "¬ ⇒",
+  "file": "neg-seq"
+}, {
+  "type": "∧ ⇒",
+  "file": "kon-seq"
+}, {
+  "type": "∨ ⇒",
+  "file": "dis-seq"
+}, {
+  "type": " ⇒",
+  "file": "imp-seq"
+}, {
+  "type": "⇒ ¬",
+  "file": "seq-neg"
+}, {
+  "type": "⇒ ∧",
+  "file": "seq-kon"
+}, {
+  "type": "⇒ ∨",
+  "file": "seq-dis"
+}, {
+  "type": "⇒ →",
+  "file": "seq-imp"
+}]
