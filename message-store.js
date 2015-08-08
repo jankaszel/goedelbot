@@ -33,3 +33,5 @@ MessageStore.prototype = {
     }
   }
 };
+
+module.exports = MessageStore;

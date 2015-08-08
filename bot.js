@@ -11,7 +11,7 @@ var seq = require('./seq.json');
 var token = process.env.TOKEN,
   bot = new TelegramBot(token, { polling: true }),
   client = redis.createClient(6379, process.env.REDIS_HOST),
-  job = [],
+  job = [];
 
 var chats = new ChatStore(client),
   motivations = new MessageStore({ client: client, key: 'motivational' }),
