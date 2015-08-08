@@ -20,6 +20,7 @@ function ChatStore (client) {
 
       catch (e) {
         console.warn('Warning: Couldn\'t restore state from redis.');
+        throw e;
       }
     }
 
