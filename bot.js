@@ -66,6 +66,25 @@ bot.on('message', function (msg) {
       bot.sendMessage(chatId, message);
     });
   }
+
+  else if (msg.text === '/sequenzen') {
+    bot.sendPhoto(chatId, 'images/seq-al.png', {
+      caption: util.format('%s, hier sind die Schlussregeln in der AL! ' +
+        'Alternativ /sequenzen_fo für die Schlussregeln in der FO.',
+        msg.from.first_name)
+    });
+  }
+
+  else if (msg.text === '/sequenzen_fo') {
+    bot.sendPhoto(chatId, 'images/seq-fo.png', {
+      caption: util.format('%s, hier sind die Schlussregeln in FO!',
+        msg.from.first_name)
+    });
+  }
+
+  else if (msg.text === '/kätzchen') {
+    bot.sendPhoto(chatId, 'images/kaetzchen.jpg');
+  }
 });
 
 jobs.push(new CronJob('00 30 08 * * *', function () {
@@ -85,7 +104,7 @@ jobs.push(new CronJob('00 00 18 * * *', function () {
     bot.sendMessage(chatId, 'Edle Logiker, Ihr wart fleißig! Den Feierabend ' +
       'habt ihr Euch redlich verdient.\n\nNicht! There\'s always more!');
   });
-}));
+}, true, 'Europe/Berlin'));
 
 process.on('exit', function () {
   console.log('Clearing up...');
