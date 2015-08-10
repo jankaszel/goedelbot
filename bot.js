@@ -2,6 +2,8 @@
 
 var TelegramBot = require('node-telegram-bot-api'),
   CronJob = require('cron').CronJob,
+  fs = require('fs'),
+  path = require('path'),
   redis = require('redis'),
   util = require('util');
   
@@ -83,7 +85,22 @@ bot.on('message', function (msg) {
   }
 
   else if (msg.text === '/kätzchen') {
-    bot.sendPhoto(chatId, 'images/kaetzchen.jpg');
+    fs.readdir('images/kaetzchen', function (err, files) {
+      if (err)
+        throw err;
+      
+      var images = files.map(function (file) {
+        return path.join('images/kaetzchen', file);
+      }).filter(function (file) {
+        return fs.statSync(file).isFile();
+      }).filter(function (file) {
+        return ['.png', '.jpg'].indexOf(path.extname(file)) !== -1;
+      });
+
+      var i = Math.floor(Math.random() * images.length);
+
+      bot.sendPhoto(chatId, images[i]);
+    });
   }
 });
 
