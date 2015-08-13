@@ -8,7 +8,8 @@ var TelegramBot = require('node-telegram-bot-api'),
   util = require('util');
   
 var ChatStore = require('./chat-store'),
-  MessageStore = require('./message-store');
+  MessageStore = require('./message-store'),
+  ASEAG = require('./lib/aseag');
 
 var seq = require('./seq.json');
 
@@ -101,6 +102,79 @@ bot.on('message', function (msg) {
 
       bot.sendPhoto(chatId, images[i]);
     });
+  }
+
+  else if (msg.text === '/bus') {
+    var stops = {
+      hainb: 100636,
+      halifax: 100625
+    }, busses = {
+      '33': 33,
+      '73': 73,
+      '12': 12,
+      '22': 22,
+      '23': 100104
+    }, destinations = {
+      '33': ['Aachen Fuchserde'],
+      '73': ['Aachen Bushof', 'Aachen Bf.Rothe Erde'],
+      '12': ['Stolberg Mühlener Bf.', 'Donnerberg Höhenstraße', 'Buschmühle Friedhof'],
+      '22': ['Stolberg Mühlener Bf.', 'Aachen Bushof'],
+      '23': ['Hüls Schulzentrum', 'Aachen Elisenbrunnen', 'Hüls Gewerbegebiet']
+    };
+    
+    var filter = [
+      // 33, hainb
+      function (entry) {
+        return entry.stopId === stops.hainb &&
+          entry.lineId === busses['33'] &&
+          destinations['33'].indexOf(entry.directionName) !== -1;
+      },
+
+      // 73, hainb
+      function (entry) {
+        return entry.stopId === stops.hainb &&
+          entry.lineId === busses['73'] &&
+          destinations['73'].indexOf(entry.directionName) !== -1;
+      },
+
+      // 12, halifax
+      function (entry) {
+        return entry.stopId === stops.halifax &&
+          entry.lineId === busses['12'] &&
+          destinations['12'].indexOf(entry.directionName) !== -1;
+      },
+
+      // 22, halifax
+      function (entry) {
+        return entry.stopId === stops.halifax &&
+          entry.lineId === busses['22'] &&
+          destinations['22'].indexOf(entry.directionName) !== -1;
+      },
+
+      // 23, halifax
+      function (entry) {
+        return entry.stopId === stops.halifax &&
+          entry.lineId === busses['23'] &&
+          destinations['23'].indexOf(entry.directionName) !== -1;
+      }
+    ]
+
+    ASEAG.call(filter, 5)
+      .then(function (data) {
+        var message = 'Logiker! Die nächsten Gefährte in Richtung Innenstadt ' +
+          ' sind... \n\n';
+
+        data.entries.forEach(function (entry) {
+          var time = new Date(entry.estimatedTime);
+
+          message = message + util.format(
+            'Linie %d an %s um %d:%d in Richtung %s\n\n',
+            entry.lineId, entry.stopName, time.getHours(), time.getMinutes(),
+            entry.directionName);
+        });
+
+        bot.sendMessage(chatId, message);
+      });
   }
 });
 
