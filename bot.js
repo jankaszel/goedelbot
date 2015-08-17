@@ -29,6 +29,7 @@ bot.getMe().then(function (me) {
 
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
+  console.log(msg.text);
 
   if (msg.text === '/start') {
     if (chats.contains(chatId)) {
@@ -178,22 +179,13 @@ bot.on('message', function (msg) {
   }
 });
 
-jobs.push(new CronJob('00 30 08 * * *', function () {
-  console.log('Digest job called');
-
-  chats.forEach(function (chatId) {
-    bot.sendMessage(chatId, 'O, welch schöner Tag! Edle Logiker, begebt Euch' +
-      ' in die Lernräume, um der Logik zu fröhnen!');
-  })
-}, true, 'Europe/Berlin'));
-
 jobs.push(new CronJob('00 00 12 * * *', function () {
-}, true, 'Europe/Berlin'));
-
-jobs.push(new CronJob('00 00 18 * * *', function () {
   chats.forEach(function (chatId) {
-    bot.sendMessage(chatId, 'Edle Logiker, Ihr wart fleißig! Den Feierabend ' +
-      'habt ihr Euch redlich verdient.\n\nNicht! There\'s always more!');
+    bot.sendPhoto(chatId, 'images/kurt.png');
+    bot.sendMessage(chatId, 'Logiker! Ihr habt euch wacker geschlagen und ' +
+      'Euch die Fundamente der Logik verinnerlicht. Nun werde ich mich in ' +
+      'Euch verinnerlichen und all den Enthusiasmus mit einer verfickt ' +
+      'schweren Klausur vermiesen. Viel Spaß!\n\nEuer Kurt');
   });
 }, true, 'Europe/Berlin'));
 
