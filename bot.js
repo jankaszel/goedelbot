@@ -179,16 +179,6 @@ bot.on('message', function (msg) {
   }
 });
 
-jobs.push(new CronJob('00 00 12 * * *', function () {
-  chats.forEach(function (chatId) {
-    bot.sendPhoto(chatId, 'images/kurt.png');
-    bot.sendMessage(chatId, 'Logiker! Ihr habt euch wacker geschlagen und ' +
-      'Euch die Fundamente der Logik verinnerlicht. Nun werde ich mich in ' +
-      'Euch verinnerlichen und all den Enthusiasmus mit einer verfickt ' +
-      'schweren Klausur vermiesen. Viel Spaß!\n\nEuer Kurt');
-  });
-}, true, 'Europe/Berlin'));
-
 process.on('exit', function () {
   console.log('Clearing up...');
 
