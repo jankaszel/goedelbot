@@ -5,7 +5,9 @@ var TelegramBot = require('node-telegram-bot-api'),
   path = require('path'),
   util = require('util');
   
-require('dotenv').config();
+require('dotenv').config({
+  path: path.join(__dirname, '.env')
+});
 
 var ASEAG = require('./lib/aseag'),
   seq = require('./seq.json');
