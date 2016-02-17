@@ -40,12 +40,14 @@ bot.on('message', function (msg) {
   }
 
   else if (msg.text === '/kaetzchen') {
-    fs.readdir(path.join(process.cwd(), 'images/kaetzchen'), function (err, files) {
+    var kaetzchenDir = path.join(__dirname, 'images/kaetzchen')
+
+    fs.readdir(kaetzchenDir, function (err, files) {
       if (err)
         throw err;
       
       var images = files.map(function (file) {
-        return path.join(process.cwd(), 'images/kaetzchen', file);
+        return path.join(kaetzchenDir, file);
       }).filter(function (file) {
         return fs.statSync(file).isFile();
       }).filter(function (file) {
