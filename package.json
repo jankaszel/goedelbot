@@ -12,6 +12,7 @@
     "url": "https://github.com/jankassel/goedelbot/issues"
   },
   "dependencies": {
+    "dotenv": "^2.0.0",
     "node-telegram-bot-api": "^0.11.1",
     "q": "^1.4.1",
     "request": "^2.60.0"
